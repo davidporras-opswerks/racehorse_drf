@@ -22,7 +22,11 @@ class JockeyNestedWriteSerializer(serializers.ModelSerializer):
 class RaceNestedWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Race
-        fields = ('name', 'date', 'location')
+        fields = (
+            'name', 'date', 'location', 'track_configuration',
+            'track_condition', 'classification', 'season', 'track_length',
+            'prize_money', 'currency', 'track_surface'
+        )
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

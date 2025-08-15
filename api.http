@@ -1,0 +1,58 @@
+### Variables
+@baseUrl = http://localhost:8000/api
+@username = admin
+@password = test
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1MzI5NTk3LCJpYXQiOjE3NTUyNDMxOTcsImp0aSI6IjY2NGU2NTY0NDY0ZDQxNGFhZmIxMjYxY2E5ZDE1Nzg0IiwidXNlcl9pZCI6IjEifQ.V8fHSnMLpnj3mQu_SlAZaKlbs6yFKzGdpGaB7POPg78
+@refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTg0Nzk5NywiaWF0IjoxNzU1MjQzMTk3LCJqdGkiOiJkNDM3MzYyNDAzZGM0MTZmODAyOGJmMjlmODVmODgzYiIsInVzZXJfaWQiOiIxIn0.eWRTM-kziZP35JH5ew57-rNG5Oqdeyu_vpJVrbHlQNY
+
+### 1. Get JWT Token
+POST {{baseUrl}}/token/
+Content-Type: application/json
+
+{
+  "username": "{{username}}",
+  "password": "{{password}}"
+}
+
+### 2. Refresh Token (if needed)
+POST {{baseUrl}}/token/refresh/
+Content-Type: application/json
+
+{
+  "refresh": "{{refresh_token}}"
+}
+
+### 3. Create Participation (Nested - creates racehorse, jockey, race if they don't exist)
+POST {{baseUrl}}/participations/
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "racehorse": {
+    "name": "Thunder Bolt",
+    "birth_date": "2020-03-15",
+    "breed": "Thoroughbred",
+    "gender": "Male"
+  },
+  "jockey": {
+    "name": "Sarah Johnson",
+    "birth_date": "1995-07-20"
+  },
+  "race": {
+    "name": "Spring Championship",
+    "date": "2025-08-20",
+    "location": "Churchill Downs",
+    "track_configuration": "L",
+    "track_condition": "F",
+    "classification": "G1",
+    "season": "SU",
+    "track_length": 1600,
+    "prize_money": 100000,
+    "currency": "USD",
+    "track_surface": "D"
+  },
+  "position": 1,
+  "finish_time": "0:01:45",
+  "margin": 0,
+  "odds": 3.5
+}
