@@ -134,7 +134,7 @@ class Race(models.Model):
     name = models.CharField(max_length=100)
     date = models.DateField()
     location = models.CharField(max_length=100)
-    track_configuration = models.CharField(max_length=1, choices=TrackConfiguration.choices)
+    track_configuration = models.CharField(max_length=2, choices=TrackConfiguration.choices)
     track_condition = models.CharField(max_length=2, choices=TrackCondition.choices)
     classification = models.CharField(max_length=2, choices=Classification.choices)
     season = models.CharField(max_length=2, choices=Season.choices)
@@ -147,7 +147,7 @@ class Race(models.Model):
     currency = models.CharField(max_length=3, default="USD")
 
 
-    track_surface = models.CharField(max_length=1, choices=TrackSurface.choices)
+    track_surface = models.CharField(max_length=2, choices=TrackSurface.choices)
 
     @property
     def winner(self):
