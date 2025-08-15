@@ -92,25 +92,25 @@ class Race(models.Model):
         OTHER = 'O', 'Other'
     
     class TrackConfiguration(models.TextChoices):
-        LEFT_HANDED = 'L', 'Left Handed'
-        RIGHT_HANDED = 'R', 'Right Handed'
-        STRAIGHT = 'S', 'Straight'
+        LEFT_HANDED = 'left_handed', 'Left Handed'
+        RIGHT_HANDED = 'right_handed', 'Right Handed'
+        STRAIGHT = 'straight', 'Straight'
 
     class TrackCondition(models.TextChoices):
-        FAST = 'F', 'Fast'
-        FROZEN = 'Z', 'Frozen'
-        GOOD = 'G', 'Good'
-        HEAVY = 'H', 'Heavy'
-        MUDDY = 'M', 'Muddy'
-        SLOPPY = 'S', 'Sloppy'
-        SLOW = 'L', 'Slow'
-        WET_FAST = 'W', 'Wet Fast'
-        FIRM = 'FM', 'Firm'
-        HARD = 'HD', 'Hard'
-        SOFT = 'SF', 'Soft'
-        YIELDING = 'YL', 'Yielding'
-        STANDARD = 'ST', 'Standard'
-        HARSH = 'HR', 'Harsh'
+        FAST = 'fast', 'Fast'
+        FROZEN = 'frozen', 'Frozen'
+        GOOD = 'good', 'Good'
+        HEAVY = 'heavy', 'Heavy'
+        MUDDY = 'muddy', 'Muddy'
+        SLOPPY = 'sloppy', 'Sloppy'
+        SLOW = 'slow', 'Slow'
+        WET_FAST = 'wet_fast', 'Wet Fast'
+        FIRM = 'firm', 'Firm'
+        HARD = 'hard', 'Hard'
+        SOFT = 'soft', 'Soft'
+        YIELDING = 'yielding', 'Yielding'
+        STANDARD = 'standard', 'Standard'
+        HARSH = 'harsh', 'Harsh'
     
     class Classification(models.TextChoices):
         GRADE_1 = 'G1', 'Grade 1'
@@ -127,15 +127,15 @@ class Race(models.Model):
         FALL = 'FA', 'Fall'
         WINTER = 'WI', 'Winter'
 
-    DIRT_CONDITIONS = {'F', 'Z', 'G', 'H', 'M', 'S', 'L', 'W'}
-    TURF_CONDITIONS = {'FM', 'G', 'HD', 'SF', 'YL'}
-    SYNTHETIC_CONDITIONS = {'ST', 'W', 'S', 'Z', 'HR'}
+    DIRT_CONDITIONS = {'fast', 'frozen', 'good', 'heavy', 'muddy', 'sloppy', 'slow', 'wet_fast'}
+    TURF_CONDITIONS = {'firm', 'good', 'hard', 'soft', 'yielding'}
+    SYNTHETIC_CONDITIONS = {'standard', 'wet_fast', 'sloppy', 'frozen', 'harsh'}
     
     name = models.CharField(max_length=100)
     date = models.DateField()
     location = models.CharField(max_length=100)
-    track_configuration = models.CharField(max_length=2, choices=TrackConfiguration.choices)
-    track_condition = models.CharField(max_length=2, choices=TrackCondition.choices)
+    track_configuration = models.CharField(max_length=15, choices=TrackConfiguration.choices)
+    track_condition = models.CharField(max_length=15, choices=TrackCondition.choices)
     classification = models.CharField(max_length=2, choices=Classification.choices)
     season = models.CharField(max_length=2, choices=Season.choices)
     track_length = models.PositiveIntegerField(help_text="Length in meters")
