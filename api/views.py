@@ -193,12 +193,12 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         self.permission_classes = [AllowAny]
-        if self.action == 'create' or self.action == 'update':
-            self.permission_classes = [IsAuthenticated]
+        if self.action in ['create', 'update', 'partial_update']:
+            self.permission_classes = [IsAdminUser]
         return super().get_permissions()
 
     def get_serializer_class(self):
-        if self.action == 'create' or self.action == 'update':
+        if self.action in ['create', 'update', 'partial_update']:
             return UserWriteSerializer
         return UserSerializer
 

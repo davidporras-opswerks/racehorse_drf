@@ -14,6 +14,10 @@ class BaseTestCase(APITestCase):
         self.user = User.objects.create_user(
             username="testuser", email="test@example.com", password="testpass"
         )
+        # Create an admin user for admin-required operations
+        self.admin_user = User.objects.create_superuser(
+            username="admin", email="admin@example.com", password="adminpass"
+        )
         self.client = APIClient()
 
         # Authenticate client for protected actions
@@ -64,6 +68,19 @@ class RacehorseTests(BaseTestCase):
         # RacehorseViewSet has pagination_class = None, so response.data is a list
         self.assertIn("Lightning Bolt", [r['name'] for r in response.data])
 
+    def test_create_racehorse_unauthenticated(self):
+        url = reverse('racehorse-list')
+        data = {
+            "name": "Thunder Storm",
+            "birth_date": "2019-06-01",
+            "breed": "Arabian",
+            "gender": "Female",
+            "is_active": True
+        }
+        client = APIClient()  # not logged in
+        response = client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
     def test_create_racehorse_authenticated(self):
         url = reverse('racehorse-list')
         data = {
@@ -76,6 +93,36 @@ class RacehorseTests(BaseTestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(Racehorse.objects.filter(name="Thunder Storm").exists())
+
+    def test_create_racehorse_invalid_data(self):
+        url = reverse('racehorse-list')
+        data = {
+            "name": "Invalid Horse",
+            "birth_date": "2019-06-01",
+            "breed": "Arabian",
+            "gender": "Invalid",  # Invalid gender
+            "is_active": True
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_racehorse_duplicate_name(self):
+        url = reverse('racehorse-list')
+        data = {
+            "name": "Lightning Bolt",  # Same as existing horse
+            "birth_date": "2019-06-01",
+            "breed": "Arabian",
+            "gender": "Female",
+            "is_active": True
+        }
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_racehorse_detail(self):
+        url = reverse('racehorse-detail', args=[self.racehorse.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['name'], "Lightning Bolt")
 
     def test_update_racehorse(self):
         url = reverse('racehorse-detail', args=[self.racehorse.id])
@@ -100,6 +147,13 @@ class JockeyTests(BaseTestCase):
         # JockeyViewSet uses pagination, so response.data has 'results' key
         self.assertIn("John Doe", [j['name'] for j in response.data['results']])
 
+    def test_create_jockey_unauthenticated(self):
+        url = reverse('jockey-list')
+        data = {"name": "Jane Rider", "birth_date": "1992-08-10", "height_cm": 165, "weight_kg": 55}
+        client = APIClient()  # not logged in
+        response = client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
     def test_create_jockey_authenticated(self):
         url = reverse('jockey-list')
         data = {"name": "Jane Rider", "birth_date": "1992-08-10", "height_cm": 165, "weight_kg": 55}
@@ -115,6 +169,25 @@ class RaceTests(BaseTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # RaceViewSet uses pagination, so response.data has 'results' key
         self.assertIn("Grand Derby", [r['name'] for r in response.data['results']])
+
+    def test_create_race_unauthenticated(self):
+        url = reverse('race-list')
+        data = {
+            "name": "Summer Stakes",
+            "date": str(date.today()),
+            "location": "Ascot",
+            "track_configuration": "R",
+            "track_condition": "F",
+            "classification": "G2",
+            "season": "SU",
+            "track_length": 1400,
+            "prize_money": 50000,
+            "currency": "USD",
+            "track_surface": "D"
+        }
+        client = APIClient()  # not logged in
+        response = client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_create_race_valid(self):
         url = reverse('race-list')
@@ -199,14 +272,33 @@ class UserTests(BaseTestCase):
         # UserViewSet uses pagination, so response.data has 'results' key
         self.assertIn("testuser", [u['username'] for u in response.data['results']])
 
-    def test_create_user(self):
+    def test_create_user_requires_admin(self):
+        # Test that regular user cannot create users
+        url = reverse('user-list')
+        data = {"username": "newuser", "email": "new@example.com", "password": "newpass"}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertFalse(User.objects.filter(username="newuser").exists())
+
+    def test_create_user_as_admin(self):
+        # Test that admin can create users
+        self.client.force_authenticate(user=self.admin_user)
         url = reverse('user-list')
         data = {"username": "newuser", "email": "new@example.com", "password": "newpass"}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(User.objects.filter(username="newuser").exists())
 
-    def test_update_user(self):
+    def test_update_user_requires_admin(self):
+        # Test that regular user cannot update users (even themselves)
+        url = reverse('user-detail', args=[self.user.id])
+        data = {"email": "updated@example.com", "password": "newpass2"}
+        response = self.client.patch(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_update_user_as_admin(self):
+        # Test that admin can update users
+        self.client.force_authenticate(user=self.admin_user)
         url = reverse('user-detail', args=[self.user.id])
         data = {"email": "updated@example.com", "password": "newpass2"}
         response = self.client.patch(url, data, format='json')
