@@ -2,8 +2,9 @@
 @baseUrl = http://localhost:8000/api
 @username = admin
 @password = test
-@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1MzI5NTk3LCJpYXQiOjE3NTUyNDMxOTcsImp0aSI6IjY2NGU2NTY0NDY0ZDQxNGFhZmIxMjYxY2E5ZDE1Nzg0IiwidXNlcl9pZCI6IjEifQ.V8fHSnMLpnj3mQu_SlAZaKlbs6yFKzGdpGaB7POPg78
-@refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTg0Nzk5NywiaWF0IjoxNzU1MjQzMTk3LCJqdGkiOiJkNDM3MzYyNDAzZGM0MTZmODAyOGJmMjlmODVmODgzYiIsInVzZXJfaWQiOiIxIn0.eWRTM-kziZP35JH5ew57-rNG5Oqdeyu_vpJVrbHlQNY
+# Note: User creation/update requires admin privileges
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1MzMxMzAzLCJpYXQiOjE3NTUyNDQ5MDMsImp0aSI6IjY5N2Q3M2I5OWEwODRhMzg4NjEzOGEwODcyNTgzM2RlIiwidXNlcl9pZCI6IjEifQ.Gauyp0Cb8QFidnP95LnaJT-6RpMAa6tHybX-PqtZqwE
+@refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTg0OTcwMywiaWF0IjoxNzU1MjQ0OTAzLCJqdGkiOiJmYTkyN2VhMzkxMjY0MmU3YjE4MTk5NTBiNWU2NWRkYiIsInVzZXJfaWQiOiIxIn0.YEZW1Rei8JKcvJlhryQPWr2And7xG2o97aA2m7GhmcM
 
 ### 1. Get JWT Token
 POST {{baseUrl}}/token/
@@ -55,4 +56,160 @@ Authorization: Bearer {{access_token}}
   "finish_time": "0:01:45",
   "margin": 0,
   "odds": 3.5
+}
+
+### 4. List All Racehorses
+GET {{baseUrl}}/racehorses/
+Authorization: Bearer {{access_token}}
+
+### 5. Create Individual Racehorse
+POST {{baseUrl}}/racehorses/
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "name": "Lightning Strike",
+  "birth_date": "2019-05-10",
+  "breed": "Arabian",
+  "gender": "Female",
+  "country": "USA",
+  "is_active": true
+}
+
+### 6. List All Jockeys
+GET {{baseUrl}}/jockeys/
+Authorization: Bearer {{access_token}}
+
+### 7. Create Individual Jockey
+POST {{baseUrl}}/jockeys/
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "name": "Mike Rodriguez",
+  "birth_date": "1988-12-03",
+  "height_cm": 168.5,
+  "weight_kg": 58.2
+}
+
+### 8. List All Races
+GET {{baseUrl}}/races/
+Authorization: Bearer {{access_token}}
+
+### 9. Create Individual Race
+POST {{baseUrl}}/races/
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "name": "Derby Classic",
+  "date": "2025-09-15",
+  "location": "Belmont Park",
+  "track_configuration": "R",
+  "track_condition": "G",
+  "classification": "G2",
+  "season": "FA",
+  "track_length": 2000,
+  "prize_money": 75000,
+  "currency": "USD",
+  "track_surface": "T"
+}
+
+### 10. List All Participations
+GET {{baseUrl}}/participations/
+Authorization: Bearer {{access_token}}
+
+### 11. Search Racehorses by Name
+GET {{baseUrl}}/racehorses/?search=Thunder
+Authorization: Bearer {{access_token}}
+
+### 12. Filter Races by Classification
+GET {{baseUrl}}/races/?classification=G1
+Authorization: Bearer {{access_token}}
+
+### 13. Order Races by Date (Descending)
+GET {{baseUrl}}/races/?ordering=-date
+Authorization: Bearer {{access_token}}
+
+### 14. Filter Jockeys by Name
+GET {{baseUrl}}/jockeys/?search=Sarah
+Authorization: Bearer {{access_token}}
+
+### 15. Get Specific Racehorse Details
+GET {{baseUrl}}/racehorses/68/
+Authorization: Bearer {{access_token}}
+
+### 16. Update Racehorse
+PATCH {{baseUrl}}/racehorses/1/
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "is_active": false
+}
+
+### 17. Get Specific Race Details
+GET {{baseUrl}}/races/6/
+Authorization: Bearer {{access_token}}
+
+### 18. List Users
+GET {{baseUrl}}/users/
+Authorization: Bearer {{access_token}}
+
+### 19. Create New User (Requires Admin)
+POST {{baseUrl}}/users/
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "username": "newuser",
+  "email": "newuser@example.com",
+  "password": "securepass123"
+}
+
+### 20. Filter Races by Track Surface
+GET {{baseUrl}}/races/?track_surface=D
+Authorization: Bearer {{access_token}}
+
+### 21. Search Multiple Fields - Racehorse by Breed
+GET {{baseUrl}}/racehorses/?breed__icontains=thorough
+Authorization: Bearer {{access_token}}
+
+### 22. Get Paginated Results (Page 2)
+GET {{baseUrl}}/jockeys/?page=2
+Authorization: Bearer {{access_token}}
+
+### 23. Complex Participation Creation (Second Place)
+POST {{baseUrl}}/participations/
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "racehorse": {
+    "name": "Storm Chaser",
+    "birth_date": "2018-11-22",
+    "breed": "Quarter Horse",
+    "gender": "Male"
+  },
+  "jockey": {
+    "name": "Emma Wilson",
+    "birth_date": "1992-04-15"
+  },
+  "race": {
+    "name": "Autumn Stakes",
+    "date": "2025-10-05",
+    "location": "Santa Anita",
+    "track_configuration": "L",
+    "track_condition": "F",
+    "classification": "G3",
+    "season": "FA",
+    "track_length": 1400,
+    "prize_money": 50000,
+    "currency": "USD",
+    "track_surface": "D"
+  },
+  "position": 2,
+  "finish_time": "0:01:52",
+  "margin": 1.5,
+  "odds": 5.2
 }

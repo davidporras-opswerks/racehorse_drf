@@ -70,3 +70,64 @@
 [INFO] 2025-08-15 15:50:31,236 api.views: Creating user - requested by: testuser (authenticated: True)
 [INFO] 2025-08-15 15:50:31,513 api.views: User created: newuser (ID: 13) - new@example.com
 [INFO] 2025-08-15 15:50:32,118 api.views: User list requested by user: testuser
+[INFO] 2025-08-15 16:02:37,167 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 16:02:51,355 api.views: Jockey list requested by user: admin
+[INFO] 2025-08-15 16:03:10,166 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 16:03:23,326 api.views: Creating race for user: admin (authenticated: True)
+[INFO] 2025-08-15 16:03:23,331 api.views: Race created: Derby Classic (ID: 13) at Belmont Park
+[INFO] 2025-08-15 16:03:27,325 api.views: Creating race for user: admin (authenticated: True)
+[INFO] 2025-08-15 16:03:27,329 api.views: Race created: Derby Classic (ID: 14) at Belmont Park
+[INFO] 2025-08-15 16:03:36,503 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 16:03:58,742 api.views: Race list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:04:20,591 api.views: Participation list requested by user: admin
+[INFO] 2025-08-15 16:05:01,588 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 16:05:10,087 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 16:05:18,521 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 16:05:49,812 api.views: Jockey list requested by user: admin
+[INFO] 2025-08-15 16:06:04,464 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 16:06:49,174 api.views: Jockey list requested by user: admin
+[INFO] 2025-08-15 16:07:28,049 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 16:07:43,236 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 16:07:53,576 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 16:09:09,719 api.views: User list requested by user: admin
+[INFO] 2025-08-15 16:09:40,294 api.views: Creating user - requested by: admin (authenticated: True)
+[INFO] 2025-08-15 16:09:40,569 api.views: User created: newuser (ID: 8) - newuser@example.com
+[INFO] 2025-08-15 16:09:43,157 api.views: User list requested by user: admin
+[INFO] 2025-08-15 16:09:53,100 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 16:10:09,195 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 16:10:19,502 api.views: Jockey list requested by user: admin
+[INFO] 2025-08-15 16:27:49,481 api.views: Creating user - requested by: admin (authenticated: True)
+[INFO] 2025-08-15 16:27:49,766 api.views: User created: newuser (ID: 3) - new@example.com
+[INFO] 2025-08-15 16:27:51,593 api.views: User list requested by user: testuser
+[INFO] 2025-08-15 16:28:34,770 api.views: Creating user - requested by: admin (authenticated: True)
+[INFO] 2025-08-15 16:28:35,052 api.views: User created: newuser (ID: 3) - new@example.com
+[INFO] 2025-08-15 16:28:36,830 api.views: User list requested by user: testuser
+[INFO] 2025-08-15 16:28:48,388 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:28:50,429 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:28:50,441 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:28:52,471 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:28:52,480 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:28:52,489 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:28:52,501 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:28:52,513 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:28:52,580 api.views: Jockey list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:28:54,635 api.views: Race list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:28:56,677 api.views: Race list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:28:58,717 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:29:00,760 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:29:02,802 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-15 16:29:05,773 api.views: Creating jockey for user: testuser (authenticated: True)
+[INFO] 2025-08-15 16:29:05,777 api.views: Jockey created: Jane Rider (ID: 14)
+[INFO] 2025-08-15 16:29:07,567 api.views: Jockey list requested by user: testuser
+[INFO] 2025-08-15 16:29:10,517 api.views: Creating participation for user: testuser (authenticated: True)
+[INFO] 2025-08-15 16:29:10,530 api.views: Participation created: 5 - Sending thank you email to test@example.com
+[INFO] 2025-08-15 16:29:11,506 api.views: Participation list requested by user: testuser
+[INFO] 2025-08-15 16:29:16,179 api.views: Creating race for user: testuser (authenticated: True)
+[INFO] 2025-08-15 16:29:16,181 api.views: Race created: Summer Stakes (ID: 22) at Ascot
+[INFO] 2025-08-15 16:29:17,058 api.views: Race list requested by user: testuser
+[INFO] 2025-08-15 16:29:20,000 api.views: Creating racehorse for user: testuser (authenticated: True)
+[INFO] 2025-08-15 16:29:20,002 api.views: Racehorse created: Thunder Storm (ID: 27) - Arabian
+[INFO] 2025-08-15 16:29:29,349 api.views: Racehorse list requested by user: testuser
+[INFO] 2025-08-15 16:29:35,179 api.views: Creating user - requested by: admin (authenticated: True)
+[INFO] 2025-08-15 16:29:35,458 api.views: User created: newuser (ID: 37) - new@example.com
+[INFO] 2025-08-15 16:29:37,224 api.views: User list requested by user: testuser
