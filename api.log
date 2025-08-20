@@ -224,3 +224,14 @@
 [INFO] 2025-08-15 18:50:19,482 api.views: Racehorse list requested by user: admin
 [INFO] 2025-08-20 08:16:24,760 api.views: Racehorse list requested by user: AnonymousUser
 [INFO] 2025-08-20 08:17:54,051 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-20 08:38:01,704 api.views: Racehorse list requested by user: AnonymousUser
+[INFO] 2025-08-20 08:38:09,155 api.views: Race list requested by user: AnonymousUser
+[INFO] 2025-08-20 09:04:57,821 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-20 09:06:44,617 api.views: Creating racehorse for user: admin (authenticated: True)
+[INFO] 2025-08-20 09:06:44,622 api.views: Racehorse created: Taiki Shuttle (ID: 6) - Thoroughbred
+[INFO] 2025-08-20 09:06:51,698 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-20 09:07:30,069 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-20 09:07:41,361 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-20 09:07:52,469 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-20 09:08:07,074 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-20 09:09:40,187 api.views: Racehorse list requested by user: AnonymousUser
