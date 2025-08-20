@@ -3,8 +3,8 @@
 @username = admin
 @password = test
 # Note: User creation/update requires admin privileges
-@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1MzMxMzAzLCJpYXQiOjE3NTUyNDQ5MDMsImp0aSI6IjY5N2Q3M2I5OWEwODRhMzg4NjEzOGEwODcyNTgzM2RlIiwidXNlcl9pZCI6IjEifQ.Gauyp0Cb8QFidnP95LnaJT-6RpMAa6tHybX-PqtZqwE
-@refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTg0OTcwMywiaWF0IjoxNzU1MjQ0OTAzLCJqdGkiOiJmYTkyN2VhMzkxMjY0MmU3YjE4MTk5NTBiNWU2NWRkYiIsInVzZXJfaWQiOiIxIn0.YEZW1Rei8JKcvJlhryQPWr2And7xG2o97aA2m7GhmcM
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1MzM3MzcwLCJpYXQiOjE3NTUyNTA5NzAsImp0aSI6IjIyMTJjMjE5N2EyODQyMTM4MjYwNTkzZjU0YzczYTc5IiwidXNlcl9pZCI6IjEifQ.W-h_r-f-Qwm2ekaxW5SoSG5wETawZ72d4pfz7j0o-Yk
+@refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTg1NTc3MCwiaWF0IjoxNzU1MjUwOTcwLCJqdGkiOiJlODVmNTcyMjE5NDI0MjIxOWY5Yjg5Y2E1NzYwZmRhZiIsInVzZXJfaWQiOiIxIn0.vinPX6nt0FrgZAEsjcjmx3PjqzWiEp5pXF_cn3u8y2M
 
 ### 1. Get JWT Token
 POST {{baseUrl}}/token/
@@ -30,13 +30,13 @@ Authorization: Bearer {{access_token}}
 
 {
   "racehorse": {
-    "name": "Thunder Bolt",
+    "name": "Thunder Bolt4",
     "birth_date": "2020-03-15",
     "breed": "Thoroughbred",
     "gender": "Male"
   },
   "jockey": {
-    "name": "Sarah Johnson",
+    "name": "Sarah Johnson4",
     "birth_date": "1995-07-20"
   },
   "race": {
@@ -136,16 +136,22 @@ GET {{baseUrl}}/jockeys/?search=Sarah
 Authorization: Bearer {{access_token}}
 
 ### 15. Get Specific Racehorse Details
-GET {{baseUrl}}/racehorses/68/
+GET {{baseUrl}}/racehorses/67/
 Authorization: Bearer {{access_token}}
 
 ### 16. Update Racehorse
-PATCH {{baseUrl}}/racehorses/1/
+PATCH {{baseUrl}}/racehorses/67/
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "is_active": false
+    "name": "Special Week2",
+    "birth_date": "1995-05-02",
+    "breed": "Thoroughbred",
+    "gender": "Male",
+    "country": "Japan",
+    "image": "http://localhost:8000/media/racehorses/OIP.webp",
+    "is_active": true
 }
 
 ### 17. Get Specific Race Details

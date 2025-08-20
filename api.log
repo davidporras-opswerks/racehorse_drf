@@ -187,3 +187,38 @@
 [INFO] 2025-08-15 16:39:01,915 api.views: Creating user - requested by: admin (authenticated: True)
 [INFO] 2025-08-15 16:39:02,196 api.views: User created: newuser (ID: 37) - new@example.com
 [INFO] 2025-08-15 16:39:03,966 api.views: User list requested by user: testuser
+[INFO] 2025-08-15 16:41:14,657 api.views: Creating participation for user: admin (authenticated: True)
+[INFO] 2025-08-15 16:41:14,670 api.views: Participation created: 23 - Sending thank you email to hiraishin.porras@gmail.com
+[INFO] 2025-08-15 17:31:41,549 api.views: Creating participation for user: admin (authenticated: True)
+[INFO] 2025-08-15 17:31:41,568 api.views: Participation created: 24 - Sending thank you email to hiraishin.porras@gmail.com
+[INFO] 2025-08-15 17:43:21,039 api.views: Creating participation for user: admin (authenticated: True)
+[INFO] 2025-08-15 17:43:21,054 api.views: Participation created: 25 - Sending thank you email to hiraishin.porras@gmail.com
+[INFO] 2025-08-15 17:43:26,875 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 17:43:37,339 api.views: Creating racehorse for user: admin (authenticated: True)
+[INFO] 2025-08-15 17:43:37,345 api.views: Racehorse created: Lightning Strike (ID: 73) - Arabian
+[INFO] 2025-08-15 17:43:43,378 api.views: Jockey list requested by user: admin
+[INFO] 2025-08-15 17:43:49,058 api.views: Jockey list requested by user: AnonymousUser
+[INFO] 2025-08-15 17:44:04,400 api.views: Creating jockey for user: admin (authenticated: True)
+[INFO] 2025-08-15 17:44:04,404 api.views: Jockey created: Mike Rodriguez (ID: 40)
+[INFO] 2025-08-15 17:44:08,958 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 17:44:10,269 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 17:44:14,430 api.views: Creating race for user: admin (authenticated: True)
+[INFO] 2025-08-15 17:44:14,436 api.views: Race created: Derby Classic (ID: 15) at Belmont Park
+[INFO] 2025-08-15 17:44:17,793 api.views: Participation list requested by user: admin
+[INFO] 2025-08-15 17:44:26,395 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 17:44:35,522 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 17:44:45,107 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 17:45:02,534 api.views: Jockey list requested by user: admin
+[INFO] 2025-08-15 17:45:55,440 api.views: User list requested by user: admin
+[INFO] 2025-08-15 17:45:59,923 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 17:46:01,347 api.views: Race list requested by user: admin
+[INFO] 2025-08-15 17:46:02,950 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 18:04:29,668 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 18:05:50,017 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 18:08:16,153 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 18:13:03,645 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 18:22:30,432 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 18:25:05,609 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 18:40:06,232 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 18:47:34,625 api.views: Racehorse list requested by user: admin
+[INFO] 2025-08-15 18:50:19,482 api.views: Racehorse list requested by user: admin
