@@ -1,5 +1,7 @@
 from pathlib import Path
 from datetime import timedelta
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -69,14 +71,10 @@ WSGI_APPLICATION = 'racehorse_drf.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'racehorse_drf_db',
-        'USER': 'racehorse_drf',
-        'PASSWORD': 'racehorse_drf_password',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600
+    )
 }
 
 
@@ -159,19 +157,21 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7)
 }
 
+REDIS_URL = os.getenv('REDIS_URL', 'redis://127.0.0.1:6379/0')
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/2",
+        "LOCATION": REDIS_URL,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     }
 }
 
-CELERY_BROKER_URL = "redis://127.0.0.1:6379/2"
+CELERY_BROKER_URL = REDIS_URL
 
-CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/2"
+CELERY_RESULT_BACKEND = REDIS_URL
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
