@@ -10,33 +10,19 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:15-alpine
-        env:
-          POSTGRES_DB: racehorse_db
-          POSTGRES_USER: racehorse_user
-          POSTGRES_PASSWORD: racehorse_pass
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd="pg_isready -U racehorse_user -d racehorse_db"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
-      redis:
-        image: redis:7-alpine
-        ports: ["6379:6379"]
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Build and start containers
-        run: docker compose up -d --build
+      - name: Build and start containers (CI override)
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml up -d --build
 
       - name: Run migrations
-        run: docker compose run --rm web python manage.py migrate --noinput
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml run --rm web python manage.py migrate --noinput
 
       - name: Run Django tests
-        run: docker compose run --rm web python manage.py test
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml run --rm web python manage.py test
+
+      - name: Shut down
+        if: always()
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml down -v
