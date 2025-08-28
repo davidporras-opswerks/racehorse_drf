@@ -11,7 +11,7 @@ def invalidate_racehorse_cache(sender, instance, **kwargs):
     print("Clearing racehorse cache")
 
     # Clear racehorse list caches
-    cache.delete_pattern('*racehorse_list*')
+    cache.clear()
 
 @receiver([post_save, post_delete], sender=Jockey)
 def invalidate_jockey_cache(sender, instance, **kwargs):
