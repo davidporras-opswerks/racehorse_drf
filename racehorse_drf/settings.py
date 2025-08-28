@@ -2,6 +2,9 @@ from pathlib import Path
 from datetime import timedelta
 import os
 import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -69,16 +72,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'racehorse_drf.wsgi.application'
 
+USERNAME = os.getenv('DB_USER')
+PASSWORD = os.getenv('DB_PASSWORD')
+HOST = os.getenv('DB_HOST', 'localhost')
+PORT = os.getenv('DB_PORT', '5432')
+NAME = os.getenv('DB_NAME')
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+DATABASE_URL = f"postgres://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{NAME}"
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
+        default=DATABASE_URL,
         conn_max_age=600
     )
 }
+
 
 
 # Password validation
