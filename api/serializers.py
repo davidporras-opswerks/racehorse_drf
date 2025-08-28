@@ -119,14 +119,69 @@ class ParticipationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participation
         fields = (
-            'id', 'racehorse_name', 'race_name', 'jockey_name', 'position',
+            'id', 'racehorse', 'racehorse_name', 'race', 'race_name', 'jockey', 'jockey_name', 'position',
             'finish_time', 'margin', 'odds', 'is_winner', 'result_status'
         )
 
+# class ParticipationWriteSerializer(serializers.ModelSerializer):
+#     racehorse = RacehorseNestedWriteSerializer()
+#     race = RaceNestedWriteSerializer()
+#     jockey = JockeyNestedWriteSerializer()
+
+#     class Meta:
+#         model = Participation
+#         fields = (
+#             'racehorse', 'race', 'jockey',
+#             'position', 'finish_time', 'margin', 'odds'
+#         )
+
+#     def create(self, validated_data):
+#         racehorse_data = validated_data.pop('racehorse')
+#         race_data = validated_data.pop('race')
+#         jockey_data = validated_data.pop('jockey')
+
+#         racehorse, _ = Racehorse.objects.get_or_create(**racehorse_data)
+#         race, _ = Race.objects.get_or_create(**race_data)
+#         jockey, _ = Jockey.objects.get_or_create(**jockey_data)
+
+#         return Participation.objects.create(
+#             racehorse=racehorse, race=race, jockey=jockey, **validated_data
+#         )
+
+#     def update(self, instance, validated_data):
+#         racehorse_data = validated_data.pop('racehorse', None)
+#         race_data = validated_data.pop('race', None)
+#         jockey_data = validated_data.pop('jockey', None)
+
+#         if racehorse_data:
+#             racehorse, _ = Racehorse.objects.get_or_create(**racehorse_data)
+#             instance.racehorse = racehorse
+
+#         if race_data:
+#             race, _ = Race.objects.get_or_create(**race_data)
+#             instance.race = race
+
+#         if jockey_data:
+#             jockey, _ = Jockey.objects.get_or_create(**jockey_data)
+#             instance.jockey = jockey
+
+#         # Update the rest of the fields (position, finish_time, etc.)
+#         for attr, value in validated_data.items():
+#             setattr(instance, attr, value)
+
+#         instance.save()
+#         return instance
+
 class ParticipationWriteSerializer(serializers.ModelSerializer):
-    racehorse = RacehorseNestedWriteSerializer()
-    race = RaceNestedWriteSerializer()
-    jockey = JockeyNestedWriteSerializer()
+    racehorse = serializers.PrimaryKeyRelatedField(
+        queryset=Racehorse.objects.all()
+    )
+    race = serializers.PrimaryKeyRelatedField(
+        queryset=Race.objects.all()
+    )
+    jockey = serializers.PrimaryKeyRelatedField(
+        queryset=Jockey.objects.all()
+    )
 
     class Meta:
         model = Participation
@@ -135,18 +190,7 @@ class ParticipationWriteSerializer(serializers.ModelSerializer):
             'position', 'finish_time', 'margin', 'odds'
         )
 
-    def create(self, validated_data):
-        racehorse_data = validated_data.pop('racehorse')
-        race_data = validated_data.pop('race')
-        jockey_data = validated_data.pop('jockey')
 
-        racehorse, _ = Racehorse.objects.get_or_create(**racehorse_data)
-        race, _ = Race.objects.get_or_create(**race_data)
-        jockey, _ = Jockey.objects.get_or_create(**jockey_data)
-
-        return Participation.objects.create(
-            racehorse=racehorse, race=race, jockey=jockey, **validated_data
-        )
 
 class RaceSerializer(serializers.ModelSerializer):
     class ParticipationSerializer(serializers.ModelSerializer):
