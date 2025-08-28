@@ -1,7 +1,7 @@
 ### Variables
 @baseUrl = http://localhost:8000/api
-@username = admin
-@password = test
+@username = david
+@password = davidadmin123
 # Note: User creation/update requires admin privileges
 @access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU1MzM3MzcwLCJpYXQiOjE3NTUyNTA5NzAsImp0aSI6IjIyMTJjMjE5N2EyODQyMTM4MjYwNTkzZjU0YzczYTc5IiwidXNlcl9pZCI6IjEifQ.W-h_r-f-Qwm2ekaxW5SoSG5wETawZ72d4pfz7j0o-Yk
 @refresh_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1NTg1NTc3MCwiaWF0IjoxNzU1MjUwOTcwLCJqdGkiOiJlODVmNTcyMjE5NDI0MjIxOWY5Yjg5Y2E1NzYwZmRhZiIsInVzZXJfaWQiOiIxIn0.vinPX6nt0FrgZAEsjcjmx3PjqzWiEp5pXF_cn3u8y2M
