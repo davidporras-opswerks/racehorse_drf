@@ -25,7 +25,6 @@ class RacehorseViewSet(viewsets.ModelViewSet):
     throttle_scope = 'racehorses'
     throttle_classes = [ScopedRateThrottle]
     queryset = Racehorse.objects.order_by('pk')
-    pagination_class = None
     filter_backends = [
         DjangoFilterBackend,
         filters.SearchFilter,
