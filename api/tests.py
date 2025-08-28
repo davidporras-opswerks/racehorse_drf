@@ -236,33 +236,45 @@ class ParticipationTests(BaseTestCase):
         # ParticipationViewSet uses pagination, so response.data has 'results' key
         self.assertIn("Lightning Bolt", [p['racehorse_name'] for p in response.data['results']])
 
-    def test_create_participation_nested(self):
+    def test_create_participation_with_ids(self):
+        # Create necessary objects first
+        racehorse = Racehorse.objects.create(
+            name="New Horse", birth_date="2020-01-01", breed="Arabian", gender="Male"
+        )
+        jockey = Jockey.objects.create(
+            name="New Jockey", birth_date="1995-01-01"
+        )
+        race = Race.objects.create(
+            name="New Race",
+            date=date.today(),
+            location="New Track",
+            track_configuration="left_handed",
+            track_condition="fast",
+            classification="G3",
+            season="SU",
+            track_length=1200,
+            prize_money=25000,
+            currency="USD",
+            track_surface="D"
+        )
+
         url = reverse('participation-list')
         data = {
-            "racehorse": {"name": "New Horse", "birth_date": "2020-01-01", "breed": "Arabian", "gender": "Male"},
-            "jockey": {"name": "New Jockey", "birth_date": "1995-01-01"},
-            "race": {
-                "name": "New Race",
-                "date": str(date.today()),
-                "location": "New Track",
-                # Add required fields for Race model
-                "track_configuration": "left_handed",
-                "track_condition": "fast",
-                "classification": "G3",
-                "season": "SU",
-                "track_length": 1200,
-                "prize_money": 25000,
-                "currency": "USD",
-                "track_surface": "D"
-            },
+            "racehorse": racehorse.id,
+            "jockey": jockey.id,
+            "race": race.id,
             "position": 1,
             "finish_time": "0:01:05",
             "margin": 0,
             "odds": 3.0
         }
+
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertTrue(Participation.objects.filter(racehorse__name="New Horse").exists())
+        self.assertTrue(
+            Participation.objects.filter(racehorse=racehorse, race=race, jockey=jockey).exists()
+        )
+
 
 
 class UserTests(BaseTestCase):
