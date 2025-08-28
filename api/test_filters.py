@@ -53,7 +53,8 @@ class FilterTests(APITestCase):
         url = reverse('racehorse-list')
         response = self.client.get(url + "?is_active=True")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        names = [r['name'] for r in response.data]
+        results = response.data.get("results", response.data)  # fallback if not paginated
+        names = [r['name'] for r in results]
         self.assertIn("Active Horse", names)
         self.assertNotIn("Inactive Horse", names)
 
@@ -61,15 +62,16 @@ class FilterTests(APITestCase):
         url = reverse('racehorse-list')
         response = self.client.get(url + "?search=active")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        names = [r['name'] for r in response.data]
+        results = response.data.get("results", response.data)
+        names = [r['name'] for r in results]
         self.assertIn("Active Horse", names)
 
     def test_racehorse_ordering_by_name(self):
         url = reverse('racehorse-list')
         response = self.client.get(url + "?ordering=-name")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # RacehorseViewSet has pagination_class = None, so response.data is a list
-        names = [r['name'] for r in response.data]
+        results = response.data.get("results", response.data)
+        names = [r['name'] for r in results]
         # ActiveRacehorseFilterBackend filters out inactive horses, so only "Active Horse" should be returned
         self.assertEqual(len(names), 1)
         self.assertEqual(names[0], "Active Horse")

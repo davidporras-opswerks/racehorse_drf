@@ -65,8 +65,9 @@ class RacehorseTests(BaseTestCase):
         url = reverse('racehorse-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # RacehorseViewSet has pagination_class = None, so response.data is a list
-        self.assertIn("Lightning Bolt", [r['name'] for r in response.data])
+        results = response.data.get("results", response.data)  # handle both paginated & non-paginated
+        names = [r['name'] for r in results]
+        self.assertIn("Lightning Bolt", names)
 
     def test_create_racehorse_unauthenticated(self):
         url = reverse('racehorse-list')
