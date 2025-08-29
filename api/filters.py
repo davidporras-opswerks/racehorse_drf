@@ -27,6 +27,7 @@ class RaceFilter(django_filters.FilterSet):
             'name': ['iexact', 'icontains'],
             'location': ['iexact', 'icontains'],
             'track_surface': ['exact'],
+            'track_condition': ['exact'],
             'classification': ['exact'],
             'season': ['exact'],
             'date': ['exact', 'lt', 'gt', 'range']
@@ -39,5 +40,5 @@ class ParticipationFilter(django_filters.FilterSet):
             'racehorse__name': ['iexact', 'icontains'],
             'jockey__name': ['iexact', 'icontains'],
             'race__name': ['iexact', 'icontains'],
-            'position': ['exact', 'lt', 'gt', 'range'],
+            'position': ['exact', 'lte', 'gte', 'range'],
         }
