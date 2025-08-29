@@ -15,8 +15,9 @@ from .serializers import (
     ParticipationSerializer, ParticipationWriteSerializer,
     UserSerializer, UserWriteSerializer
 )
-from api.filters import ActiveRacehorseFilterBackend, RacehorseFilter, JockeyFilter, RaceFilter, ParticipationFilter
+from api.filters import RacehorseFilter, JockeyFilter, RaceFilter, ParticipationFilter
 from api.tasks import send_thank_you_email
+from .permissions import IsAdminOrSelf
 
 # Set up logger
 logger = logging.getLogger(__name__)
@@ -29,7 +30,6 @@ class RacehorseViewSet(viewsets.ModelViewSet):
         DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter,
-        ActiveRacehorseFilterBackend
     ]
     filterset_class = RacehorseFilter
     search_fields = ['name']
@@ -197,7 +197,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         self.permission_classes = [AllowAny]
         if self.action in ['create', 'update', 'partial_update']:
-            self.permission_classes = [IsAdminUser] 
+            self.permission_classes = [IsAdminOrSelf] 
         return super().get_permissions()
 
     def get_serializer_class(self):
