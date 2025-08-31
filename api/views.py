@@ -37,11 +37,11 @@ class RacehorseViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         logger.info(f"Racehorse list requested by user: {request.user}")
-        # # Generate a cache key per user (or 'anon' if not logged in)
-        # user_key = f'racehorse_list_user_{request.user.id if request.user.is_authenticated else "anon"}'
-        # decorated = cache_page(60*15, key_prefix=user_key)(super().list)
-        # return decorated(request, *args, **kwargs)
-        return super().list(request, *args, **kwargs)   
+        # Generate a cache key per user (or 'anon' if not logged in)
+        user_key = f'racehorse_list_user_{request.user.id if request.user.is_authenticated else "anon"}'
+        decorated = cache_page(60*15, key_prefix=user_key)(super().list)
+        return decorated(request, *args, **kwargs)
+        # return super().list(request, *args, **kwargs)   
 
     def get_queryset(self):
         import time
@@ -80,11 +80,11 @@ class JockeyViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         logger.info(f"Jockey list requested by user: {request.user}")
-        # # Generate a cache key per user (or 'anon' if not logged in)
-        # user_key = f'jockey_list_user_{request.user.id if request.user.is_authenticated else "anon"}'
-        # decorated = cache_page(60*15, key_prefix=user_key)(super().list)
-        # return decorated(request, *args, **kwargs)
-        return super().list(request, *args, **kwargs)   
+        # Generate a cache key per user (or 'anon' if not logged in)
+        user_key = f'jockey_list_user_{request.user.id if request.user.is_authenticated else "anon"}'
+        decorated = cache_page(60*15, key_prefix=user_key)(super().list)
+        return decorated(request, *args, **kwargs)
+        # return super().list(request, *args, **kwargs)   
     
     def get_queryset(self):
         import time
@@ -122,11 +122,11 @@ class RaceViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         logger.info(f"Race list requested by user: {request.user}")
-        # # Generate a cache key per user (or 'anon' if not logged in)
-        # user_key = f'race_list_user_{request.user.id if request.user.is_authenticated else "anon"}'
-        # decorated = cache_page(60*15, key_prefix=user_key)(super().list)
-        # return decorated(request, *args, **kwargs)
-        return super().list(request, *args, **kwargs)   
+        # Generate a cache key per user (or 'anon' if not logged in)
+        user_key = f'race_list_user_{request.user.id if request.user.is_authenticated else "anon"}'
+        decorated = cache_page(60*15, key_prefix=user_key)(super().list)
+        return decorated(request, *args, **kwargs)
+        # return super().list(request, *args, **kwargs)   
     
     def get_queryset(self):
         import time
@@ -162,11 +162,11 @@ class ParticipationViewSet(viewsets.ModelViewSet):
     
     def list(self, request, *args, **kwargs):
         logger.info(f"Participation list requested by user: {request.user}")
-        # # Generate a cache key per user (or 'anon' if not logged in)
-        # user_key = f'participation_list_user_{request.user.id if request.user.is_authenticated else "anon"}'
-        # decorated = cache_page(60*15, key_prefix=user_key)(super().list)
-        # return decorated(request, *args, **kwargs)
-        return super().list(request, *args, **kwargs)   
+        # Generate a cache key per user (or 'anon' if not logged in)
+        user_key = f'participation_list_user_{request.user.id if request.user.is_authenticated else "anon"}'
+        decorated = cache_page(60*15, key_prefix=user_key)(super().list)
+        return decorated(request, *args, **kwargs)
+        # return super().list(request, *args, **kwargs)   
     
     def perform_create(self, serializer):
         user_info = f"{self.request.user} (authenticated: {self.request.user.is_authenticated})"

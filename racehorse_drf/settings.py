@@ -3,6 +3,7 @@ from datetime import timedelta
 import os
 import dj_database_url
 from dotenv import load_dotenv
+from corsheaders.defaults import default_headers
 
 load_dotenv()
 
@@ -219,4 +220,8 @@ LOGGING = {
 # Allow React dev server
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React default
+]
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "cache-control",  # <-- allow Cache-Control header
 ]
