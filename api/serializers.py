@@ -122,10 +122,13 @@ class ParticipationSerializer(serializers.ModelSerializer):
     racehorse_name = serializers.CharField(source='racehorse.name')
     jockey_name = serializers.CharField(source='jockey.name')
     race_name = serializers.CharField(source='race.name')
+    racehorse_image = serializers.ImageField(source='racehorse.image')
+    race_date = serializers.DateField(source='race.date')
+    race_season = serializers.CharField(source='race.season')
     class Meta:
         model = Participation
         fields = (
-            'id', 'racehorse', 'racehorse_name', 'race', 'race_name', 'jockey', 'jockey_name', 'position',
+            'id', 'racehorse', 'racehorse_name', 'racehorse_image', 'race', 'race_name', 'race_date', 'race_season', 'jockey', 'jockey_name', 'position',
             'finish_time', 'margin', 'odds', 'is_winner', 'result_status'
         )
 
