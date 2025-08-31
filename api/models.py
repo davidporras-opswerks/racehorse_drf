@@ -4,7 +4,12 @@ from django.core.exceptions import ValidationError
 
 # Create your models here.
 class User(AbstractUser):
-    pass
+    avatar = models.ImageField(
+        upload_to="avatars/",
+        null=True,
+        blank=True,
+        default="avatars/default.png"  # optional default image
+    )
 
 # This is the model for the Racehorse (name, age, breed)
 class Racehorse(models.Model):
