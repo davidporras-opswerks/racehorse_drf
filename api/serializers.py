@@ -3,11 +3,39 @@ from rest_framework import serializers
 from .models import Racehorse, Jockey, Race, Participation, User
 
 class RacehorseForJockeySerializer(serializers.ModelSerializer):
+    jockey_total_races = serializers.SerializerMethodField()
+    jockey_total_wins = serializers.SerializerMethodField()
+    jockey_win_rate = serializers.SerializerMethodField()
+
     class Meta:
         model = Racehorse
         fields = (
-            'name', 'total_wins', 'win_rate'
+            'name',
+            'jockey_total_races',
+            'jockey_total_wins',
+            'jockey_win_rate',
         )
+
+    def get_jockey_total_races(self, obj):
+        jockey = self.context.get("jockey")
+        if not jockey:
+            return 0
+        return Participation.objects.filter(racehorse=obj, jockey=jockey).count()
+
+    def get_jockey_total_wins(self, obj):
+        jockey = self.context.get("jockey")
+        if not jockey:
+            return 0
+        return Participation.objects.filter(
+            racehorse=obj,
+            jockey=jockey,
+            position=1  # or however you define a "win"
+        ).count()
+
+    def get_jockey_win_rate(self, obj):
+        total_races = self.get_jockey_total_races(obj)
+        total_wins = self.get_jockey_total_wins(obj)
+        return round((total_wins / total_races) * 100, 2) if total_races > 0 else 0.0
 
 class RacehorseNestedWriteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -78,12 +106,30 @@ class UserWriteSerializer(serializers.ModelSerializer):
 
 
 class RacehorseSerializer(serializers.ModelSerializer):
+    class ParticipationSerializer(serializers.ModelSerializer):
+        racehorse = serializers.CharField(source='racehorse.name')
+        jockey = serializers.CharField(source='jockey.name')
+
+        class Meta:
+            model = Participation
+            fields = (
+                'racehorse',
+                'jockey',
+                'position',
+                'finish_time',
+                'margin',
+                'odds',
+                'result_status'
+            )
+    participations = ParticipationSerializer(many=True, read_only=True)
+
     class Meta:
         model = Racehorse
         fields = (
             'id', 'name', 'birth_date', 'breed', 'gender', 'country', 'image',
             'is_active', 'created_at', 'updated_at',
-            'total_races', 'total_wins', 'win_rate', 'age'
+            'total_races', 'total_wins', 'win_rate', 'age', 'participations',
+            'g1_wins'
         )
 
 class RacehorseWriteSerializer(serializers.ModelSerializer):
@@ -95,21 +141,38 @@ class RacehorseWriteSerializer(serializers.ModelSerializer):
         )
 
 class JockeySerializer(serializers.ModelSerializer):
+    class ParticipationSerializer(serializers.ModelSerializer):
+        racehorse = serializers.CharField(source='racehorse.name')
+        jockey = serializers.CharField(source='jockey.name')
+
+        class Meta:
+            model = Participation
+            fields = (
+                'racehorse',
+                'jockey',
+                'position',
+                'finish_time',
+                'margin',
+                'odds',
+                'result_status'
+            )
+    participations = ParticipationSerializer(many=True, read_only=True)
     racehorses = serializers.SerializerMethodField()
 
     class Meta:
         model = Jockey
         fields = (
             'id', 'name', 'image', 'height_cm', 'weight_kg', 'birth_date',
-            'total_races', 'total_wins', 'win_rate', 'age', 'racehorses'
+            'total_races', 'total_wins', 'win_rate', 'age', 'racehorses', 'participations', 'g1_wins'
         )
 
     def get_racehorses(self, obj):
-        # Get unique racehorses this jockey has ridden
-        racehorses_qs = Racehorse.objects.filter(
-            participations__jockey=obj
-        ).distinct()
-        return RacehorseForJockeySerializer(racehorses_qs, many=True).data
+        horses = Racehorse.objects.filter(participations__jockey=obj).distinct()
+        return RacehorseForJockeySerializer(
+            horses,
+            many=True,
+            context={'jockey': obj}
+        ).data
 
 class JockeyWriteSerializer(serializers.ModelSerializer):
     class Meta:

@@ -48,6 +48,14 @@ class Racehorse(models.Model):
             return today.year - self.birth_date.year - (
                 (today.month, today.day) < (self.birth_date.month, self.birth_date.day)
             )
+        
+    @property
+    def g1_wins(self):
+        return self.participations.filter(
+            position=1,
+            race__classification=Race.Classification.GRADE_1
+        ).count()
+
 
     def __str__(self):
         return self.name
@@ -82,6 +90,13 @@ class Jockey(models.Model):
     @property
     def win_rate(self):
         return (self.total_wins / self.total_races) * 100 if self.total_races > 0 else 0
+    
+    @property
+    def g1_wins(self):
+        return self.participations.filter(
+            position=1,
+            race__classification=Race.Classification.GRADE_1
+        ).count()
     
     def __str__(self):
         return self.name
@@ -162,7 +177,7 @@ class Race(models.Model):
     @property
     def total_participants(self):
         return self.participations.count()
-
+    
     def __str__(self):
         return f"{self.name} on {self.date}"
     
