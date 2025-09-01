@@ -79,7 +79,7 @@ HOST = os.getenv('DB_HOST', 'localhost')
 PORT = os.getenv('DB_PORT', '5432')
 NAME = os.getenv('DB_NAME')
 
-DATABASE_URL = f"postgres://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{NAME}"
+DATABASE_URL = f"postgresql://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{NAME}"
 
 DATABASES = {
     'default': dj_database_url.config(
