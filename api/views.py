@@ -196,8 +196,10 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         self.permission_classes = [AllowAny]
-        if self.action in ['create', 'update', 'partial_update']:
+        if self.action in ['update', 'partial_update']:
             self.permission_classes = [IsAdminOrSelf] 
+        elif self.action in ['create']:
+            self.permission_classes = [IsAdminUser]
         return super().get_permissions()
 
     def get_serializer_class(self):

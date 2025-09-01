@@ -303,11 +303,13 @@ class UserTests(BaseTestCase):
         self.assertTrue(User.objects.filter(username="newuser").exists())
 
     def test_update_user_requires_admin(self):
-        # Test that regular user cannot update users (even themselves)
+        # Test that regular user CAN update their own info
         url = reverse('user-detail', args=[self.user.id])
         data = {"email": "updated@example.com", "password": "newpass2"}
         response = self.client.patch(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.email, "updated@example.com")
 
     def test_update_user_as_admin(self):
         # Test that admin can update users

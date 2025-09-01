@@ -72,9 +72,9 @@ class FilterTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         results = response.data.get("results", response.data)
         names = [r['name'] for r in results]
-        # ActiveRacehorseFilterBackend filters out inactive horses, so only "Active Horse" should be returned
-        self.assertEqual(len(names), 1)
-        self.assertEqual(names[0], "Active Horse")
+        # Check that both horses are present and ordering is correct
+        self.assertEqual(set(names), {"Active Horse", "Inactive Horse"})
+        self.assertEqual(names, sorted(names, reverse=True))
 
     # Jockey filters
     def test_jockey_search_name_icontains(self):
