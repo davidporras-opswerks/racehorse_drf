@@ -31,7 +31,7 @@ services:
       - media_volume:/app/media
     environment:
       - DEBUG=${DEBUG:-1}
-      - DATABASE_URL=postgresql://${DB_USER:-racehorse_user}:${DB_PASSWORD:-racehorse_password}@db:${DB_PORT:-5432}/${DB_NAME:-racehorse_db}
+      - DATABASE_URL=postgresql://${DB_USER:-racehorse_user}:${DB_PASSWORD:-racehorse_pass}@db:${DB_PORT:-5432}/${DB_NAME:-racehorse_db}
       - REDIS_URL=redis://redis:${REDIS_PORT:-6379}/${REDIS_DB:-0}
     depends_on:
       - db
@@ -46,7 +46,7 @@ services:
       - media_volume:/app/media
     environment:
       - DEBUG=${DEBUG:-1}
-      - DATABASE_URL=postgresql://${DB_USER:-racehorse_user}:${DB_PASSWORD:-racehorse_password}@db:${DB_PORT:-5432}/${DB_NAME:-racehorse_db}
+      - DATABASE_URL=postgresql://${DB_USER:-racehorse_user}:${DB_PASSWORD:-racehorse_pass}@db:${DB_PORT:-5432}/${DB_NAME:-racehorse_db}
       - REDIS_URL=redis://redis:${REDIS_PORT:-6379}/${REDIS_DB:-0}
     depends_on:
       - db
