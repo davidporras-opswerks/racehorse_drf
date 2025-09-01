@@ -16,7 +16,7 @@ from .serializers import (
     UserSerializer, UserWriteSerializer
 )
 from api.filters import RacehorseFilter, JockeyFilter, RaceFilter, ParticipationFilter
-from api.tasks import send_thank_you_email
+from api.tasks import send_thank_you_email, send_invite_to_new_user
 from .permissions import IsAdminOrSelf
 
 # Set up logger
@@ -214,5 +214,8 @@ class UserViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         user_info = f"{self.request.user} (authenticated: {self.request.user.is_authenticated})"
         logger.info(f"Creating user - requested by: {user_info}")
+        raw_password = self.request.data.get("password")
         user = serializer.save()
         logger.info(f"User created: {user.username} (ID: {user.id}) - {user.email}")
+        if raw_password:
+            send_invite_to_new_user.delay(user.email, raw_password)
